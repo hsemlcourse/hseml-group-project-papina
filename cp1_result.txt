@@ -1,0 +1,2 @@
+Macro F1: 0.1377
+Weighted F1: 0.0403
