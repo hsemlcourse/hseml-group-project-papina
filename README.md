@@ -1,85 +1,71 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/kOqwghv0)
-# ML Project — [Название проекта]
+# ML Project — Предсказание направления изменения ключевой ставки
 
 **Студент:** Папина Анжелика Владимировна
 
 **Группа:** БИВ235
 
+## Задача
 
-## Оглавление
+Классификация направления изменения ключевой ставки центрального банка: `Hike`, `Hold`, `Cut`.
 
-1. [Описание задачи](#описание-задачи)
-2. [Структура репозитория](#структура-репозитория)
-3. [Запуски](#быстрый-старт)
-4. [Данные](#данные)
-5. [Результаты](#результаты)
-7. [Отчёт](#отчёт)
-
-
-## Описание задачи
-
-**Задача:** Классификация (Hike/Hold/Cut)
-
-**Датасет:** Central Bank Rates Intelligence (Kaggle) — исторические данные процентных ставок 49 стран за 80 лет
-
-**Целевая метрика:** Macro F1-score (учитывает несбалансированность классов)
-
-
+**Целевая метрика:** Macro F1-score.
 
 ## Структура репозитория
-Опишите структуру проекта, сохранив при этом верхнеуровневые папки. Можно добавить новые при необходимости.
+
 ```
 .
 ├── data
-│   ├── processed               # Очищенные и обработанные данные
-│   └── raw                     # Исходные файлы
-├── models                      # Сохранённые модели 
+│   ├── processed/processed_data.csv
+│   └── raw/global_central_bank_rates_1945_2026.csv
+├── models
+│   └── final_model.pkl
 ├── notebooks
-│   ├── 01_eda.ipynb            # EDA
-│   ├── 02_baseline.ipynb       # Baseline-модель
-│   └── 03_experiments.ipynb    # Эксперименты и ablation study
-├── presentation                # Презентация для защиты
+│   └── cp2.ipynb
+├── presentation
 ├── report
-│   ├── images                  # Изображения для отчёта
-│   └── report.md               # Финальный отчёт
-├── src
-│   ├── preprocessing.py        # Предобработка данных
-│   └── modeling.py             # Обучение и оценка моделей
-├── tests
-│   └── test.py                 # Тесты пайплайна
+│   └── report.md
 ├── requirements.txt
+├── Dockerfile
+├── docker-compose.yml
+├── .flake8
 └── README.md
 ```
 
-## Запуск
+## Быстрый старт
 
-Этот блок замените способом запуска вашего сервиса.
 ```bash
-# 1. Клонировать репозиторий
-git clone <url>
-cd <repo-name>
-
-# 2. Создать виртуальное окружение
+cd <repo-folder>
 python -m venv .venv
-source .venv/bin/activate   # Linux/macOS
-# .venv\Scripts\activate    # Windows
-
-# 3. Установить зависимости
+.venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## Данные
-- `data/raw/` — исходные файлы
-- `data/processed/` — предобработанные данные
+### Запуск ноутбука
 
+```bash
+jupyter notebook notebooks/cp2.ipynb
+```
+
+### Запуск через Docker
+
+```bash
+docker compose up --build
+```
+
+После запуска откройте `http://localhost:8888`.
+
+## Данные
+
+- `data/raw/` — исходные данные из CP1.
+- `data/processed/` — подготовленные данные, используемые в CP2.
 
 ## Результаты
-Здесь коротко выпишите результаты.
-| Модель | [Метрика 1] | [Метрика 2] | Примечание |
-|--------|-------------|-------------|------------|
-| Baseline | — | — | |
-| Лучшая модель | — | — | |
 
+- Модели: LogisticRegression, RandomForest, KNN, CatBoost, GradientBoosting, VotingClassifier.
+- Гиперпараметры подобраны минимум для двух моделей (`RandomForest`, `GradientBoosting`).
+- Выполнено уменьшение размерности с помощью PCA и визуализация.
+- Финальная модель: `models/final_model.pkl`.
 
 ## Отчёт
 
